@@ -22,7 +22,7 @@ function DynamicCardGenerator({ qrUrl, generateQR, captureRef, formData, handleC
 
         <div className="profile-details">
           <img
-            src={formData.image ? URL.createObjectURL(formData.image) : "https://via.placeholder.com/100"}
+            src={formData.image ? URL.createObjectURL(formData.image) : "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"}
             alt="Profile"
             className="profile-pic"
           />
