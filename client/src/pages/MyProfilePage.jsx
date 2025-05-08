@@ -82,7 +82,7 @@ function MyProfilePage() {
             setFormData={setFormData}
           />
         </div>
-        <div className="d-flex flex-column gap-2">
+        <div className="d-flex flex-column  gap-2">
           <DynamicCardGenerator
             qrUrl={qrUrl}
             handleCapture={handleCapture}
