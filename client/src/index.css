@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.custom-border {
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, rgb(3, 72, 184), rgb(1, 167, 45)) border-box;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+
+
+}
