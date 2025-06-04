@@ -15,9 +15,9 @@ function AdminLayout() {
     
     
     
-    <div className="d-flex flex-row ms-2 me-0">
+    <div className="d-flex flex-row mb-0 me-0">
     {/* Sidebar */}
-    <Offcanvas show={show} onHide={handleClose} placement="start" responsive="md">
+    <Offcanvas show={show} onHide={handleClose} placement="start" responsive="lg">
       <Sidebar handleClose={handleClose} />
     </Offcanvas>
   

@@ -24,9 +24,7 @@ function DynamicCardGenerator({ qrUrl, generateQR, captureRef, formData,isFormFi
   }, [formData]);
 
   return (
-    <div className="card-outer  "  style={{
-
-    }}>
+    <div className="card-outer ms-3 mt-3 " >
       <div className="card-inner p-3" >
         <img src={cardbg} ref={captureRef} className="card-bg " alt="" />
 

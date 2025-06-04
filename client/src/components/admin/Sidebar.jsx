@@ -30,7 +30,7 @@ function Sidebar({handleClose}) {
 
 
 
-      <div className={`d-flex flex-column ps-1  justify-content-evenly`} style={{ width: "250px",height:"100vh"}}>
+      <div className={`d-flex flex-column ps-1   justify-content-evenly`} style={{ width: "250px",height:"100vh"}}>
         <div className="p-3">
           <Link onClick={handleClose} to="/myprofile">
             <img src={logo} alt="Logo" className="img-fluid" style={{ maxWidth: "100px" }} />

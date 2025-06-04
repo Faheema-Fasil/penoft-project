@@ -109,10 +109,10 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
 
 
   return (
-    <Form className=" py-md-1  px-md-0  bg-white">
+    <Form className=" py-sm-1  px-sm-5  bg-white">
 
 
-      <Row className="mb-2">
+      <Row className="mb-1">
         <Form.Group as={Col} xs={12} controlId="formFullName" className="p-2">
           <Form.Label className="fw-bolder text-dark mb-1">
             Your Full Name <span className="text-danger">*</span>
@@ -129,8 +129,8 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
         </Form.Group>
       </Row>
 
-      <Row className="mb-2 ">
-        <Form.Group as={Col} xs={12} md={6} controlId="formAddImages" className="mb-3 p-2 mb-md-0">
+      <Row className="mb-1 ">
+        <Form.Group as={Col} xs={12} md={6} controlId="formAddImages" className="p-2 ">
           <Form.Label className="fw-bolder text-dark mb-1">
             Add Your Images <span className="text-danger">*</span>
           </Form.Label>
@@ -142,9 +142,9 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
             className="border-success"
 
           />
-          <Form.Text className="text-danger fs-6 mt-2">
+          {/* <Form.Text className="text-danger fs-6 mt-2">
             Less than 1 Mb file
-          </Form.Text>
+          </Form.Text> */}
         </Form.Group>
 
         <Form.Group as={Col} xs={12} md={6} controlId="formDateOfBirth" className="p-2">
@@ -181,7 +181,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
         </Form.Group>
       </Row>
 
-      <Row className="mb-2">
+      <Row className="mb-1">
         <Form.Group as={Col} xs={12} controlId="formEmail" className="p-2">
           <Form.Label className="fw-bolder text-dark mb-1">
             Email Id <span className="text-danger"> *</span>
@@ -198,7 +198,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
         </Form.Group>
       </Row>
 
-      <Row className="mb-2">
+      <Row className="mb-1">
         <Form.Group as={Col} xs={12} md={12} controlId="formDistrict" className="mb-3 mb-md-0 p-2">
           <Form.Label className="fw-bolder text-dark mb-1">
             District <span className="text-danger"> *</span>
