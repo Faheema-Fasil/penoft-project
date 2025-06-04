@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BarChart from "../components/BarChart";
 import PiChart from "../components/PiChart";
 import { Col, Row } from "react-bootstrap";
+import {fetchData} from '../Api/service'
+
 
 function DashBoardPage() {
+  const [dashboard,setDashboard]=useState({})
+  const getDashboard = async () => {
+    try {
+      const res = await fetchData({endpoint: "/api/dashboard"}); // Update the URL if needed
+      if (res.status === 200) {
+        setDashboard(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch dashboard data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getDashboard();
+  }, []);
+
   const genderChartData = {
     labels: ["Men", "Women", "Others"],
     datasets: [
       {
-        data: [19512, 10452, 801],
+        data: [
+          dashboard.noMen || 0,
+          dashboard.noWomen || 0,
+          dashboard.noOthers || 0,
+        ],
         backgroundColor: ["#23b26d", "#f5c443", "#7a6ff0"], // green, yellow, blue
         hoverBackgroundColor: ["#1a8a54", "#d4a537", "#5c53c6"],
       },
@@ -22,7 +44,12 @@ function DashBoardPage() {
       {
         axis: "y",
         label: "Registration Category",
-        data: [19512, 10452, 681],
+        data: [
+          
+          dashboard.noCat1 || 0,
+          dashboard.noCat2 || 0,
+          dashboard.noCat3 || 0,
+        ],
         fill: false,
         backgroundColor: ["rgb(0, 132, 22)", "rgb(0, 146, 131)", "rgb(0, 255, 213)"],
         borderColor: ["rgb(0, 132, 22)", "rgb(0, 145, 131)", "rgb(0, 255, 229)"],
