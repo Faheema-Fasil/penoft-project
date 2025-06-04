@@ -22,7 +22,7 @@ function AdminLayout() {
     </Offcanvas>
   
     {/* Main Content Area */}
-    <div className="d-flex flex-column w-100 min-vh-100">
+    <div className="d-flex flex-column w-100 min-vh-100 p-2">
       <Header handleShow={handleShow} />
       
       <div className="flex-grow-1 outlet-wrapper overflow-auto">

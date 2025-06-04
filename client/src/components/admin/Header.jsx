@@ -31,12 +31,7 @@ function Header({handleShow}) {
     </button>
   </div>
 </nav>
-<Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
+
        
 
     <Container fluid className=" bg-white" > 
@@ -122,6 +117,12 @@ function Header({handleShow}) {
       </Row>
     
     </Container>
+    <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
     <Modal.Header closeButton>
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header>
