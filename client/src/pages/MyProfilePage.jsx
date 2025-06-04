@@ -100,8 +100,8 @@ function MyProfilePage() {
 
   return (
     <ProfileProvider>
-      <Container fluid className="  p-md-2 border rounded border-success w-100"> {/* Added padding, light background, min-vh-100 */}
-        <Row className="justify-content-center g-5"> {/* Use Row for layout, justify-content-center to center content, g-4 for gutter */}
+      <div fluid className="  p-md-2 border rounded border-success m-5"> {/* Added padding, light background, min-vh-100 */}
+        <Row className="d-flex align-content-center justify-content-center g-5"> {/* Use Row for layout, justify-content-center to center content, g-4 for gutter */}
           {/* Profile Update Form Column */}
           <Col xs={12} lg={6}> {/* Full width on mobile, half width on large screens */}
             <Card className=" p-md-2  border-0"> {/* Added Card, padding, shadow, and h-100 for equal height */}
@@ -126,7 +126,7 @@ function MyProfilePage() {
 
           {/* Dynamic Card Generator Column */}
           <Col xs={12} lg={6}> {/* Full width on mobile, half width on large screens */}
-            <Card className="d-flex justify-content-lg-center  border-0 mt-5"> {/* Added Card, padding, shadow, and h-100 for equal height */}
+            <Card className="d-flex justify-content-lg-center   border-0 mt-5"> {/* Added Card, padding, shadow, and h-100 for equal height */}
               <Card.Body className="">
                 <DynamicCardGenerator
                   qrUrl={qrUrl}
@@ -140,7 +140,7 @@ function MyProfilePage() {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </div>
     </ProfileProvider>
   );
 }
