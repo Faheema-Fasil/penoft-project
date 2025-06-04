@@ -39,12 +39,14 @@ function Sidebar({handleClose}) {
         <ul className="nav nav-pills flex-column  ">
           <li className="nav-item">
             <Link onClick={handleClose}
+            
               to="/dashboard"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "/dashboard" ? "bg-success" : ""}`}
+
+              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "/dashboard" ? "bg-success text-light" : ""}`}
 
             >
-              <FaTh className="me-3" />
-              <span>Dashboard</span>
+              <FaTh className={"me-3"} />
+              <span className={`${location.pathname === "/dashboard" ? "bg-success text-light" : ""}`}>Dashboard</span>
             </Link>
           </li>
           <li className="nav-item">

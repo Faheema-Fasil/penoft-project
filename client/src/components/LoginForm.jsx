@@ -1,5 +1,6 @@
 // LoginForm.jsx
 import React, { useState } from "react";
+import {  toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../reactContext/AuthContext"; // Assuming this path is correct
 import API from '../Api/axios'; // Assuming this path is correct
@@ -18,19 +19,20 @@ function LoginForm({ reg }) {
     e.preventDefault();
     try {
       if (!email || !password || !userType) {
-        alert("Cannot login! Please provide essential details.");
+        toast.success("Cannot login! Please provide essential details.");
         return;
       }
+
   
       const res = await API.post('/api/users/login', { email, password, userType });
-  
+   
       const { token, user } = res.data;
   
       // Save to localStorage or sessionStorage
       localStorage.setItem("authToken", token);
       localStorage.setItem("user", JSON.stringify(user));
   
-      alert("Login successful");
+      toast.success("Login successful");
       console.log("token",token);
       console.log("user",user);
       
@@ -40,8 +42,11 @@ function LoginForm({ reg }) {
   
       navigate("/myprofile");
     } catch (error) {
-      console.error(error.response?.data || error.message);
-      alert("Login failed");
+      if (error.response?.status === 404) {
+        toast.warning("Invalid Email/Password");
+      } else {
+        toast.error("Login failed. Please try again later.");
+      }
     }
   };
   
@@ -157,6 +162,7 @@ function LoginForm({ reg }) {
           )}
         </form>
       </div>
+      
     </div>
   );
 }

@@ -1,24 +1,31 @@
-const express=require('express');
+const dotenv = require("dotenv");
+const express = require("express");
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-app.use(cors());
-const dotenv = require('dotenv');
-dotenv.config()
-const userRoutes = require('./Routes/userRouter');
+const bodyParser = require("body-parser");
+const cors = require("cors");
+dotenv.config();
 
-
-
-
-require('./DB/database')
+const userRoutes = require("./Routes/userRouter");
+const profileRoutes = require("./Routes/profileRouter");
+const locationRoutes = require("./Routes/locationRouter");
+const authMiddleware = require("./middleware/authMiddleware");
+const dashboardRoutes=require("./Routes/DashboardRouter")
 const PORT = process.env.PORT || 5000;
+
+require("./DB/database");
 app.use(bodyParser.json());
-app.use('/api/users', userRoutes);
+app.use(cors());
 
+app.use(authMiddleware.authenticate);
+app.use("/uploads", express.static("uploads"));
 
+app.use("/api/users", userRoutes);
+app.use("/api/profiles", profileRoutes);
+app.use("/api/locations", locationRoutes);
+app.use("/api/dashboard", dashboardRoutes)
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
+app.get("/", (req, res) => {
+  res.send("Server is running!");
 });
 
 app.listen(PORT, () => {

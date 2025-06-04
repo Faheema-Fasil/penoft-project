@@ -5,6 +5,7 @@ import DynamicCardGenerator from "../components/DynamicCardGenerator"; // Assumi
 import { ProfileProvider } from "../reactContext/CardGenator"; // Assuming this path is correct
 import html2canvas from "html2canvas";
 import QrCode from "qrcode";
+import { toast } from "react-toastify";
 
 function MyProfilePage() {
   const [formData, setFormData] = useState({
@@ -67,6 +68,7 @@ function MyProfilePage() {
     link.click();
   } catch (error) {
     console.error("Capture failed:", error);
+    toast.error("Capture failed")
   }
 };
 
