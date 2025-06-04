@@ -8,7 +8,7 @@ function DashBoardPage() {
     labels: ["Men", "Women", "Others"],
     datasets: [
       {
-        data: [19512, 10452, 81],
+        data: [19512, 10452, 801],
         backgroundColor: ["#23b26d", "#f5c443", "#7a6ff0"], // green, yellow, blue
         hoverBackgroundColor: ["#1a8a54", "#d4a537", "#5c53c6"],
       },
@@ -34,15 +34,15 @@ function DashBoardPage() {
   };
 
   return (
-    <div className="custom-border py-4 my-2 bg-danger-subtle">
-      <Row className="g-4 justify-content-center">
-        <Col xs={12} md={6} lg={4} className="d-flex justify-content-center">
-          <div className="custom-border p-3 w-100" style={{ maxWidth: "400px" }}>
-            <PiChart chartData={genderChartData} />;
+    <div className="custom-border p-4 my-5 bg-danger-subtle " >
+      <Row className="g-4 justify-content-center align-content-center">
+        <Col xs={12} md={8} lg={4} className="d-flex justify-content-center">
+          <div className="custom-border p-3 w-100" >
+            <PiChart chartData={genderChartData} />
           </div>
         </Col>
         <Col xs={12} md={12} lg={8} className="d-flex justify-content-center">
-          <div className="custom-border p-3 w-100" style={{ maxWidth: "800px" }}>
+          <div className="custom-border p-3 w-100" >
             <BarChart data={data} />
           </div>
         </Col>

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import Button from "react-bootstrap/Button";
 
 const districts = [
   { value: "thiruvananthapuram", label: "Thiruvananthapuram" },
@@ -61,110 +60,218 @@ const panchayats = [
 ];
 
 function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange, formData, setFormData }) {
-  const [selectedDistrict, setSelectedDistrict] = useState(formData.district);
 
-  const filteredPanchayats = panchayats.filter((panchayat) => panchayat.district === selectedDistrict);
+  const [selectedDistrictOption, setSelectedDistrictOption] = useState(
+    districts.find((option) => option.value === formData.district) || null
+  );
+
+  const [filteredPanchayats, setFilteredPanchayats] = useState([]);
+  const captureScreenshot = () => {
+    const requiredFields = ["name", "dob", "phone", "email", "district", "panchayat"];
+  
+    const allFilled = requiredFields.every((field) => {
+      const value = formData[field];
+      return typeof value === "string" ? value.trim() !== "" : Boolean(value);
+    });
+  
+    if (!allFilled) {
+      alert("Please fill all required fields before submitting.");
+      console.log("Validation failed: ", formData);
+      return;
+    }
+  
+    handleCapture();
+    setFormData({
+      name: "",
+    dob: "",
+    phone: "",
+    email: "",
+    district: "",
+    panchayat: "",
+    })
+  };
+  
+  useEffect(() => {
+    if (selectedDistrictOption) {
+      const filtered = panchayats.filter(
+        (panchayat) => panchayat.district === selectedDistrictOption.value
+      );
+      setFilteredPanchayats(filtered);
+
+      if (!filtered.some(p => p.value === formData.panchayat)) {
+        setFormData((prev) => ({ ...prev, panchayat: "" }));
+      }
+    } else {
+      setFilteredPanchayats([]);
+      setFormData((prev) => ({ ...prev, panchayat: "" }));
+    }
+  }, [selectedDistrictOption, formData.panchayat, setFormData]);
+
 
   return (
-    <div className="d-flex flex-column gap-2 p-3 p-md-5">
-      <div className="d-flex flex-column gap-0 justify-content-start align-items-start">
-        <p className="text-dark fw-bolder">
-          Your Full Name <span className="text-danger">*</span>
-        </p>
-        <Form.Control
-          type="text"
-          placeholder="Enter Full Name"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-          className="w-100 border border-success"
-        />
-      </div>
-      <div className="d-flex flex-row gap-3 justify-content-start align-items-start">
-        <div className="w-50">
-          <p className="text-dark fw-bolder">
+    <Form className=" py-md-1  px-md-0  bg-white">
+
+
+      <Row className="mb-2">
+        <Form.Group as={Col} xs={12} controlId="formFullName" className="p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
+            Your Full Name <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Full Name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            className="border-success"
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-2 ">
+        <Form.Group as={Col} xs={12} md={6} controlId="formAddImages" className="mb-3 p-2 mb-md-0">
+          <Form.Label className="fw-bolder text-dark mb-1">
             Add Your Images <span className="text-danger">*</span>
-          </p>
-          <Form.Control type="file" onChange={handleFileChange} required className="border border-success" />
-          <p className="text-danger justify-content-center d-flex align-items-center fs-6 mt-2">Less than 1 Mb file</p>
-        </div>
-        <div className="w-50">
-          <p className="text-dark fw-bolder">
+          </Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            required
+            className="border-success"
+
+          />
+          <Form.Text className="text-danger fs-6 mt-2">
+            Less than 1 Mb file
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group as={Col} xs={12} md={6} controlId="formDateOfBirth" className="p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
             Date of Birth <span className="text-danger">*</span>
-          </p>
+          </Form.Label>
           <Form.Control
             type="date"
             name="dob"
             value={formData.dob}
             onChange={handleInputChange}
-            className="border border-success"
+            className="border-success"
+            required
           />
-        </div>
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-1">
+        <Form.Group as={Col} xs={12} controlId="formPhoneNumber" className="p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
+            Phone Number<span className="text-danger"> *</span>
+          </Form.Label>
+          <Form.Control
+            type="tel"
+            pattern="[0-9]{10}"
+            maxLength={10}
+            placeholder="6282600896"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            className="border-success "
+            required
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-2">
+        <Form.Group as={Col} xs={12} controlId="formEmail" className="p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
+            Email Id <span className="text-danger"> *</span>
+          </Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter Email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className="border-success"
+            required
+          />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-2">
+        <Form.Group as={Col} xs={12} md={12} controlId="formDistrict" className="mb-3 mb-md-0 p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
+            District <span className="text-danger"> *</span>
+          </Form.Label>
+          <Select
+            name="district"
+            required
+            options={districts}
+            value={selectedDistrictOption} // Use local state for value
+            onChange={(selectedOption) => {
+              setSelectedDistrictOption(selectedOption); // Update local state
+              setFormData((prev) => ({ ...prev, district: selectedOption ? selectedOption.value : '' }));
+            }}
+            placeholder="Select a district..."
+            classNamePrefix="react-select"
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                borderColor: '#28a745', // Bootstrap success color
+                '&:hover': {
+                  borderColor: '#28a745',
+                },
+                boxShadow: 'none',
+              }),
+              option: (baseStyles, state) => ({
+                ...baseStyles,
+                backgroundColor: state.isFocused ? '#e2ffed' : 'white',
+                color: 'black',
+              }),
+            }}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} xs={12} md={12} controlId="formPanchayat" className="p-2">
+          <Form.Label className="fw-bolder text-dark mb-1">
+            Panchayat <span className="text-danger"> *</span>
+          </Form.Label>
+          <Select
+            name="panchayat"
+            required
+            options={filteredPanchayats}
+            value={filteredPanchayats.find((option) => option.value === formData.panchayat) || null}
+            onChange={(selectedOption) => {
+              setFormData((prev) => ({ ...prev, panchayat: selectedOption ? selectedOption.value : '' }));
+            }}
+            placeholder="Select a panchayat..."
+            classNamePrefix="react-select"
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                borderColor: '#28a745',
+                '&:hover': {
+                  borderColor: '#28a745',
+                },
+                boxShadow: 'none',
+              }),
+              option: (baseStyles, state) => ({
+                ...baseStyles,
+                backgroundColor: state.isFocused ? '#e2ffed' : 'white',
+                color: 'black',
+              }),
+            }}
+            isDisabled={!selectedDistrictOption} // Disable panchayat until district is selected
+          />
+        </Form.Group>
+      </Row>
+
+      <div className="d-grid gap-2 mt-2">
+        <Button variant="success" size="lg" onClick={captureScreenshot} className="fw-bold py-2">
+          Submit & Download
+        </Button>
       </div>
-      <div className="d-flex flex-column gap-0 justify-content-start align-items-start">
-        <p className="text-dark fw-bolder">
-          Phone Number<span className="text-danger"> *</span>
-        </p>
-        <Form.Control
-          type="text"
-          placeholder="+91 | 6282600896"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          className="w-100 border border-success"
-        />
-      </div>
-      <div className="d-flex flex-column gap-0 justify-content-start align-items-start">
-        <p className="text-dark fw-bolder">
-          Email Id <span className="text-danger"> *</span>
-        </p>
-        <Form.Control
-          type="email"
-          placeholder="Enter Email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="w-100 border border-success"
-        />
-      </div>
-      <div className="d-flex flex-column gap-0">
-        <p className="text-dark fw-bolder">
-          District <span className="text-danger"> *</span>
-        </p>
-        <Select
-          name="district"
-          required
-          options={districts}
-          value={districts.find((option) => option.value === selectedDistrict)}
-          onChange={(selectedOption) => {
-            setSelectedDistrict(selectedOption.value);
-            setFormData((prev) => ({ ...prev, district: selectedOption.value }));
-          }}
-          placeholder="Select a district..."
-          className="w-full pl-4 pr-10 py-2 placeholder-gray-400 appearance-none bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 "
-        />
-      </div>
-      <div className="d-flex flex-column gap-0">
-        <p className="text-dark fw-bolder">
-          Panchayat <span className="text-danger"> *</span>
-        </p>
-        <Select
-          name="panchayat"
-          required
-          options={filteredPanchayats}
-          value={filteredPanchayats.find((option) => option.value === formData.panchayat)}
-          onChange={(selectedOption) => {
-            setFormData((prev) => ({ ...prev, panchayath: selectedOption.value }));
-          }}
-          placeholder="Select a panchayat..."
-          className="w-full pl-4 pr-10 py-2 placeholder-gray-400 appearance-none bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400"
-        />
-      </div>
-      <Button variant="primary" onClick={handleCapture} className="mt-4">
-        Submit & Download
-      </Button>
-    </div>
+    </Form>
   );
 }
 

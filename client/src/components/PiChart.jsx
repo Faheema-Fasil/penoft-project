@@ -24,9 +24,9 @@ function PiChart({ chartData }) {
 
   return (
     <div>
-      <h3 style={{ color: "green" }} className="fw-bold d-flex justify-content-center align-items-center mb-5">
+      <h5 style={{ color: "green" }} className="fw-bold d-flex justify-content-center align-items-center mb-5">
         Gender Details
-      </h3>
+      </h5>
       <canvas ref={chartRef} style={{ width: "100%", height: "auto" }} />
     </div>
   );
