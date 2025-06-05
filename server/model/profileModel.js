@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const profileSchema = new mongoose.Schema({
+  id:{ type: String, required: true },
   name: { type: String, required: true },
   dob: { type: Date, required: true },
   phone: { type: String, required: true },

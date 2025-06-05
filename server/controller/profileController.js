@@ -4,7 +4,7 @@ const { transporter } = require("../utils/email");
 
 exports.createProfile = async (req, res) => {
   try {
-    const { name, dob, phone, email, district, panchayat,gender,category,qrcode } = req.body;
+    const { id,name, dob, phone, email, district, panchayat,gender,category,qrcode } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ error: "Image file is required" });
@@ -17,6 +17,7 @@ exports.createProfile = async (req, res) => {
     const imageDownloadLink = `${req.protocol}://${req.get("host")}/${imagePath.replace(/\\/g, "/")}`;
 
     const newProfile = new Profile({
+      id,
       name,
       dob,
       phone,
@@ -61,5 +62,28 @@ exports.getProfiles = async (req, res) => {
     res.json(profiles);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getID = async (req, res) => {
+
+  try {
+    let uniqueId;
+    let isUnique = false;
+    while (!isUnique) {
+      const randomNumber = Math.floor(1000 + Math.random() * 9000);
+      uniqueId = `TVM${randomNumber}`;
+      const existingProfile = await Profile.findOne({ id: uniqueId });
+
+      if (!existingProfile) {
+        isUnique = true; // ID is unique, exit loop
+      }
+    }
+
+    res.status(200).json({ id: uniqueId }); // Return the generated unique ID
+
+  } catch (error) {
+    console.error("Error generating ID:", error);
+    res.status(500).json({ error: error.message || "Failed to generate ID" });
   }
 };

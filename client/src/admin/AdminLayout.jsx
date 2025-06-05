@@ -22,7 +22,7 @@ function AdminLayout() {
 
   return (
     <div className="d-flex flex-row mb-0 me-0">
-      <Offcanvas show={show} onHide={handleClose} placement="start" responsive="lg">
+      <Offcanvas style={{width:"fit-content"}} show={show} onHide={handleClose} placement="start" responsive="lg">
         <Sidebar handleClose={handleClose} />
       </Offcanvas>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../reactContext/AuthContext";
 import {
   FaTh,
@@ -16,16 +16,23 @@ import {
 
 import logo from "../../assets/log.ico";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
-function Sidebar({ handleClose }) {
+function Sidebar() {
   const { logout } = useAuth();
   const location = useLocation();
 
   // Helper for active nav
   const isActive = (path) => location.pathname === path;
+ const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShowModal = () => setShow(true);
 
   return (
+
+    <>
+
     <div className="sidebar-custom">
       {/* Close Button (mobile only) */}
       <Button variant="link" onClick={handleClose} className="sidebar-close-btn d-lg-none" aria-label="Close sidebar">
@@ -102,11 +109,8 @@ function Sidebar({ handleClose }) {
           </li>
           <li>
             <Link
-              onClick={() => {
-                handleClose();
-                logout();
-              }}
-              to="*"
+              onClick={handleShowModal}
+              to="#"
             >
               <FaSignOutAlt className="me-2" />
               <span>Logout</span>
@@ -118,6 +122,26 @@ function Sidebar({ handleClose }) {
         </div>
       </div>
     </div>
+    <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+    <Modal.Header closeButton>
+
+        </Modal.Header>
+        <Modal.Body className="text-center">
+         Do you want to logout?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="success" onClick={logout}>Logout</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 

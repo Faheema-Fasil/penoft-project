@@ -1,4 +1,6 @@
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-shadow: none;
@@ -29,20 +31,50 @@
 }
 
 .card-outer {
-  width: fit-content;
+  width: fit-content; /* fixed width */
+  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
 }
-
 .card-inner {
+  width: 400px;
+  height: auto; /* let it grow with content */
   position: relative;
-  width: fit-content;
+  overflow: hidden;
   border: #02ab3d 1px solid;
   background: #fff;
   border-radius: 10px;
+}
+@media (max-width: 576px) {
+  .card-outer {
+    width: 100%;
+    padding: 10px;
+  }
 
-  max-width: 400px;
+  .card-inner {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .profile-pic {
+    width: 70px;
+    height: 70px;
+  }
+
+  .qr-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .details-text .name {
+    font-size: 16px;
+  }
+
+  .details-text .info {
+    font-size: 10px;
+  }
 }
 
 .card-bg {
@@ -271,4 +303,8 @@
   .sidebar-close-btn {
     display: none !important;
   }
+}
+.dropdown-logout-item:hover {
+  background-color: #219653 !important; /* Green background on hover */
+  color: #f8f9fa !important; /* Light text color (e.g., light grey or white) */
 }

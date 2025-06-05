@@ -15,7 +15,7 @@ function Header({handleShow}) {
 
   return (
     <>
-<nav className="navbar navbar-expand-md navbar-md">
+<nav className="navbar navbar-expand-lg navbar-lg">
   <div className="container-fluid">
     <button
       onClick={handleShow}
@@ -78,11 +78,11 @@ function Header({handleShow}) {
                 }}
                 alt="User Avatar"
               />
-              {/* Initial Circle (visible on xs to sm) */}
+
               <span
                 className="me-2 d-inline-flex d-md-none bg-secondary text-white rounded-circle justify-content-center align-items-center"
                 style={{
-                  width: "36px", // Slightly larger circle
+                  width: "36px", 
                   height: "36px",
                   fontSize: "1.1rem",
                 }}
@@ -90,26 +90,26 @@ function Header({handleShow}) {
                 {user?.email?.[0]?.toUpperCase() || "U"}
               </span>
 
-              {/* Email Text (truncated on small screens, full on large) */}
+             
               <span
-                className="text-dark me-1 text-truncate d-none d-sm-block" // Hide on xs, show on sm+, truncate on sm
+                className="text-dark me-1 text-truncate d-none d-sm-block" 
                 style={{
-                  maxWidth: "120px", // Adjusted max-width for truncation
+                  maxWidth: "120px", 
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                 }}
-                title={user?.email} // Show full email on hover
+                title={user?.email}
               >
                 {user?.name || "User"}
               </span>
-              {/* Bootstrap's default dropdown arrow is automatically added */}
+            
             </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+            <Dropdown.Menu  className="dropdown-logout-item">
               <Dropdown.Item 
-              // 
-              onClick={handleShowModal}>Logout</Dropdown.Item>
+             className="text-center dropdown-logout-item"
+              onClick={handleShowModal} >Logout</Dropdown.Item>
               
             </Dropdown.Menu>
           </Dropdown>
@@ -126,14 +126,14 @@ function Header({handleShow}) {
     <Modal.Header closeButton>
 
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="text-center">
          Do you want to logout?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={logout}>Logout</Button>
+          <Button variant="success" onClick={logout}>Logout</Button>
         </Modal.Footer>
       </Modal>
     </>

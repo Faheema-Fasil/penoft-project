@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap"; 
 import ProfileUpdateForm from "../components/ProfileUpdateForm"; 
 import DynamicCardGenerator from "../components/DynamicCardGenerator"; 
@@ -7,10 +7,13 @@ import html2canvas from "html2canvas";
 import QrCode from "qrcode";
 import { toast } from "react-toastify";
 
-import { postData } from "../Api/service";
+import { fetchData, postData } from "../Api/service";
+import API from "../Api/axios";
 
 function MyProfilePage() {
+  const[uniqueID,setUniqueID]=useState()
   const [formData, setFormData] = useState({
+    
     name: "",
     image: null,
     dob: "",
@@ -25,7 +28,17 @@ function MyProfilePage() {
 
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [filteredPanchayats, setFilteredPanchayats] = useState([]);
+const generateId=async()=>{
+  const response = await fetchData({endpoint:"api/profiles/id"});
+  console.log(response);
+  setUniqueID(response.data.id)
+  
+  
 
+}
+useEffect(() => {
+  generateId()
+}, [])
   const handleChange = (e) => {
     e.preventDefault();
     console.log("Form data on submit:", formData);
@@ -81,6 +94,7 @@ function MyProfilePage() {
       const link = document.createElement("a");
       link.href = dataURL;
       const formDatas = new FormData()
+      formDatas.append("id",uniqueID)
       formDatas.append("name", formData.name)
       formDatas.append("dob", formData.dob)
       formDatas.append("phone", formData.phone)
@@ -94,7 +108,11 @@ function MyProfilePage() {
 
       const apiResponse = await postData({ endpoint: "api/profiles", data: formDatas })
       console.log(apiResponse);
-      toast.success("card succssfully send to your email id")
+      if (response.status==200) {
+        
+        toast.success("card succssfully send to your email id")
+        generateId();
+      }
 
       // link.download = "card.png";
       // link.click();
@@ -111,11 +129,11 @@ function MyProfilePage() {
 
   return (
     <ProfileProvider>
-      <div fluid className="  p-md-2 border rounded border-success m-5"> {/* Added padding, light background, min-vh-100 */}
-        <Row className="d-flex align-content-center justify-content-center g-5"> {/* Use Row for layout, justify-content-center to center content, g-4 for gutter */}
-          {/* Profile Update Form Column */}
-          <Col xs={12} lg={6}> {/* Full width on mobile, half width on large screens */}
-            <Card className=" p-md-2  border-0"> {/* Added Card, padding, shadow, and h-100 for equal height */}
+      <div fluid className="  p-md-2 border rounded border-success m-5"> 
+        <Row className="d-flex align-content-center justify-content-center g-5"> 
+
+          <Col xs={12} md={12} lg={6}> 
+            <Card className=" p-md-2  border-0"> 
               <Card.Body>
                 <ProfileUpdateForm
                   isFormFilled={isFormFilled}
@@ -136,15 +154,15 @@ function MyProfilePage() {
           </Col>
 
           {/* Dynamic Card Generator Column */}
-          <Col xs={12} lg={6}> {/* Full width on mobile, half width on large screens */}
-            <Card className="d-flex justify-content-lg-center   border-0 mt-5"> {/* Added Card, padding, shadow, and h-100 for equal height */}
+          <Col xs={12} md={12} lg={6}> {/* Full width on mobile, half width on large screens */}
+            <Card className="d-flex justify-content-sm-center   border-0 mt-5"> {/* Added Card, padding, shadow, and h-100 for equal height */}
               <Card.Body className="">
                 <DynamicCardGenerator
                   qrUrl={qrUrl}
                   isFormFilled={isFormFilled}
                   handleCapture={handleCapture} // This handleCapture is for the card's download button
                   captureRef={captureRef}
-
+                  uniqueID={uniqueID}
                   formData={formData}
                 />
               </Card.Body>

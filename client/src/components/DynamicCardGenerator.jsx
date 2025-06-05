@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import cardbg from "../assets/2.png";
 import { Button } from "react-bootstrap";
 
-function DynamicCardGenerator({ qrUrl, captureRef, formData, isFormFilled }) {
+function DynamicCardGenerator({ qrUrl, captureRef, formData ,uniqueID}) {
   const today = new Date().toLocaleDateString();
   const [position, setPosition] = useState({ x: 30, y: 80 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -24,11 +24,11 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData, isFormFilled }) {
   }, [formData]);
 
   return (
-    <div className="card-outer ms-3 mt-3 " >
+    <div className="card-outer  mt-3 " >
       <div className="card-inner p-3" >
         <img src={cardbg} ref={captureRef} className="card-bg " alt="" />
 
-        <div className="id-badge">ID TVM0489</div>
+        <div className="id-badge">ID {uniqueID}</div>
 
         <div className="profile-details">
           <img
