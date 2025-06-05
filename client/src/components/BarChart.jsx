@@ -1,8 +1,17 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 function BarChart({ data }) {
   const options = {
@@ -10,18 +19,33 @@ function BarChart({ data }) {
     responsive: true,
     plugins: {
       legend: {
-        position: "right",
+        // position: "right",
       },
       title: {
         display: true,
+      },
+      datalabels: {
+        // anchor: 'end',
+        align: 'right',
+        color: '#333',
+        font: {
+          weight: 'bold',
+          size: 14,
+        },
+        formatter: (value, context) => {
+          const label = context.chart.data.labels[context.dataIndex];
+          return `${label}: ${value}`;
+        }, 
       },
     },
   };
 
   return (
     <div>
-      <h3 style={{ textAlign: "center", fontWeight: "bolder", color: "green" }}>Registration Category</h3>
-      <Bar data={data} options={options} />
+      <h5 style={{ textAlign: "center", fontWeight: "bolder", color: "green" }}>
+        Registration Category
+      </h5>
+      <Bar data={data} options={options} plugins={[ChartDataLabels]} />
     </div>
   );
 }

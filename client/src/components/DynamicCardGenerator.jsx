@@ -64,8 +64,8 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData, uniqueID }) {
             </>
           )}
         </div>
-        <Button className="preview-btn btn-success">Live Preview</Button>
       </div>
+        <Button className="preview-btn btn-success">Live Preview</Button>
 
       <div className="drag-hint">Drag and adjust image position inside box</div>
     </div>

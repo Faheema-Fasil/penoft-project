@@ -57,14 +57,14 @@ function DashBoardPage() {
   return (
     <div className="custom-border p-4 m-5 bg-danger-subtle ">
       <Row className="g-4 justify-content-center align-content-center">
-        <Col xs={12} md={8} lg={4} className="d-flex justify-content-center">
+        <Col xs={8} md={6} lg={4} className="d-flex justify-content-center">
           <div className="custom-border p-3 w-100">
             <PiChart chartData={genderChartData} />
           </div>
         </Col>
-        <Col xs={12} md={12} lg={8} className="d-flex justify-content-center">
+        <Col xs={12} md={8} lg={8} className="d-flex justify-content-center">
           <div className="custom-border p-3 w-100">
-            <BarChart data={data} />
+            <BarChart data={data}  />
           </div>
         </Col>
       </Row>

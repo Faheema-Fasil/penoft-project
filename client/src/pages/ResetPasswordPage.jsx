@@ -40,7 +40,7 @@ function ResetPasswordPage() {
     return (
         <>
 
-        <div className="d-flex flex-row justify-content-center align-items-center mt-5 pt-5">
+        <div className="d-flex flex-row justify-content-center align-items-center  pt-5">
             <div
                 className="w-100 p-4"
                 style={{

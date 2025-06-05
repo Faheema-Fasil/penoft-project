@@ -77,9 +77,14 @@ function MyProfilePage() {
       const text = JSON.stringify(qrData); // Only include safe fields
       const url = await QrCode.toDataURL(text, { errorCorrectionLevel: "H" });
       setQrUrl(url);
-      const canvas = await html2canvas(element, {
-        useCORS: true,
-        scale: 2, // sharper image
+      const canvas = await new Promise((resolve)=>{
+        setTimeout(async()=>{
+          const result = await html2canvas(element, {
+            useCORS: true,
+            scale: 2,
+        });
+        resolve(result);
+      },50);  
       });
       const dataURL = canvas.toDataURL("image/png");
       const response = await fetch(dataURL);
@@ -116,7 +121,7 @@ function MyProfilePage() {
 
   return (
     <ProfileProvider>
-      <div fluid className="  p-md-2 border rounded border-success m-5">
+      <div fluid className="  p-md-3 border rounded border-success m-2">
         <Row className="d-flex align-content-center justify-content-center g-5">
           <Col xs={12} md={12} xl={6}>
             <Card className=" px-md-4  border-0">

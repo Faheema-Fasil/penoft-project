@@ -4,7 +4,7 @@ import React from 'react'
 function Footer() {
   return (
 
-    <div className='text-center  border-top ' style={{
+    <div className='text-center  border-top mt- ' style={{
 
       width: "100%",
 

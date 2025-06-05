@@ -9,11 +9,12 @@ function AuthLayout() {
         <Header/>
         <div className=''
          style={{
+         
         minHeight: "calc(100vh - 150px)",
         background: "#e9fcf4"
       }}>
 
-        <Outlet/>
+        <Outlet />
         </div>
         <Footer/>
       

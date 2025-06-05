@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Container, Row, Col, Image, Dropdown, Modal, Button } from "react-bootstrap";
 import { BellFill } from "react-bootstrap-icons"; // Assuming react-bootstrap-icons is installed
 import { useAuth } from "../../reactContext/AuthContext"; // Assuming this path is correct
-
+import logo from '..//../assets/logo.png'
+import { Link } from "react-router-dom";
 function Header({handleShow}) {
   const [show, setShow] = useState(false);
 
@@ -15,35 +16,54 @@ function Header({handleShow}) {
 
   return (
     <>
-<nav className="navbar navbar-expand-lg navbar-lg">
-  <div className="container-fluid">
-    <button
-      onClick={handleShow}
-      className="navbar-toggler ms-auto"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span className="navbar-toggler-icon"></span>
-    </button>
-  </div>
-</nav>
+ <nav className="navbar navbar-expand-lg navbar-light p-1"> {/* Using navbar-light for better visibility of toggler icon on light backgrounds */}
+    <div className="container-fluid d-flex justify-content-between align-items-center d-md-none"> {/* Use flexbox to space items */}
+      {/* Left Toggler (visible on small screens only) */}
+       <Link to="/dashboard">
+       <img src={logo} width={100} alt="" />
+
+       </Link>
+     
+      <button
+        onClick={handleShow}
+        className="navbar-toggler d-lg-none" // Hide on large screens and up
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation (Right)"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      {/* Collapsible content (will be hidden behind both togglers) */}
+      {/* On large screens, this content will appear normally */}
+      <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        {/* Your navigation links would typically go inside this div */}
+        {/* For example:
+        <div className="navbar-nav">
+          <a className="nav-link active" aria-current="page" href="#">Home</a>
+          <a className="nav-link" href="#">Features</a>
+          <a className="nav-link" href="#">Pricing</a>
+        </div>
+        */}
+      </div>
+    </div>
+  </nav>
 
        
 
     <Container fluid className=" bg-white" > 
-      <Row className="d-flex justify-content-between align-items-center flex-wrap"> 
+      <Row className="d-flex justify-content-between px-2 align-items-center flex-wrap"> 
 
         <Col xs="auto" className="text-start mb-2 mb-md-0"> {/* Center text on mobile, left align on desktop */}
-          <h3
+          <h5
             className="mb-1 fw-bold text-dark"
             style={{ fontSize: "1.5rem", wordWrap: "break-word" }} // Slightly larger font for prominence
           >
             Hi {user?.name || "User"}!
-          </h3>
+          </h5>
           <p className="mb-0 text-muted fw-light small d-none d-md-block"> {/* Changed text-dark to text-muted for softer look */}
             Kindly fill your details and make the complete.
           </p>

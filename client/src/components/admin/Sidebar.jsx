@@ -35,7 +35,7 @@ function Sidebar() {
 
     <div className="sidebar-custom">
       {/* Close Button (mobile only) */}
-      <Button variant="link" onClick={handleClose} className="sidebar-close-btn d-lg-none" aria-label="Close sidebar">
+      <Button variant="link" onClick={handleClose} className="sidebar-close-btn d-md-none" aria-label="Close sidebar">
         <FaTimes size={22} />
       </Button>
 

@@ -1,6 +1,6 @@
 // ForgetPassword.jsx
 import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { requestPasswordReset } from '../Api/service';
 import Header from '../components/Header';
@@ -15,24 +15,24 @@ function ForgetPassword() {
     e.preventDefault();
     setLoading(true);
 
-    if(!email){
+    if (!email) {
       toast.warning("Cannot login! Please provide essential details.");
       setLoading(false);
-             return;
-   }if (!emailRegex.test(email)) {
-           toast.error("Please enter a valid email address.");
-           setLoading(false);
-           return;
-         }
+      return;
+    } if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
     try {
       const response = await requestPasswordReset({ email });
       toast.success(response.data.message || "Password reset instructions sent to your email!");
       // setEmail('');
-      navigate('/resetpassword', { state: { email: email } }); 
+      navigate('/resetpassword', { state: { email: email } });
     } catch (error) {
       console.error("Forgot password request failed:", error);
       toast.error(error.response?.data?.message || "Failed to send reset email. Please try again.");
-      
+
     } finally {
       setLoading(false);
     }
@@ -42,16 +42,18 @@ function ForgetPassword() {
     <>
 
       <div
-        className=" d-flex flex-row justify-content-center align-items-center  "
+        className=" d-flex flex-row justify-content-center  align-items-center  "
       >
         <div
-          className="w-100 p-4 "
+          className="w-100  p-4"
           style={{
-            maxWidth: "500px",
+            maxWidth: "400px", // Decreased max-width
+            marginTop:"150px",
             border: "1.5px solid #a3e6cb",
             borderRadius: "12px",
             background: "#ffffff",
             boxShadow: "0 8px 16px rgba(0,0,0,0.1)"
+
           }}
         >
           <form

@@ -18,7 +18,10 @@ function PiChart({ chartData }) {
           datalabels: {
             color: "#333",
             font: { weight: "bold", size: 16 },
-            formatter: (value, context) => value, 
+            formatter: (value, context) => {
+              const label = context.chart.data.labels[context.dataIndex];
+              return `${label}: ${value}`;
+            }, 
           },
         },
         cutout: "70%",
