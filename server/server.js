@@ -9,10 +9,13 @@ const userRoutes = require("./Routes/userRouter");
 const profileRoutes = require("./Routes/profileRouter");
 const locationRoutes = require("./Routes/locationRouter");
 const authMiddleware = require("./middleware/authMiddleware");
-const dashboardRoutes=require("./Routes/DashboardRouter")
+const dashboardRoutes=require("./Routes/DashboardRouter");
+const { default: mongoose } = require("mongoose");
 const PORT = process.env.PORT || 5000;
 
 require("./DB/database");
+mongoose.set('bufferCommands', false);
+
 app.use(bodyParser.json());
 app.use(cors());
 

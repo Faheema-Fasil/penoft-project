@@ -42,7 +42,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
   );
 
   const [filteredPanchayats, setFilteredPanchayats] = useState([]);
-  const captureScreenshot = () => {
+  const captureScreenshot = async() => {
     const requiredFields = ["name", "dob", "phone", "email", "district", "panchayat"];
 
     const allFilled = requiredFields.every((field) => {
@@ -60,7 +60,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
           }
     
 
-    handleCapture();
+    await handleCapture();
      setFormData({
       name: "",
       dob: "",
