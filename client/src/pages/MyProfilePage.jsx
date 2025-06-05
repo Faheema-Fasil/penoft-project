@@ -1,25 +1,45 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import ProfileUpdateForm from "../components/ProfileUpdateForm";
 import DynamicCardGenerator from "../components/DynamicCardGenerator";
 import { ProfileProvider } from "../reactContext/CardGenator";
 import html2canvas from "html2canvas";
 import QrCode from "qrcode";
+import { toast } from "react-toastify";
+
+import { fetchData, postData } from "../Api/service";
+import API from "../Api/axios";
+
 function MyProfilePage() {
+  const [uniqueID, setUniqueID] = useState();
   const [formData, setFormData] = useState({
     name: "",
-    image: "",
+    image: null,
     dob: "",
     phone: "",
     email: "",
     district: "",
-    panchayath: "",
+    panchayat: "",
+    category: "",
+    gender: "",
   });
 
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [filteredPanchayats, setFilteredPanchayats] = useState([]);
+  const generateId = async () => {
+    const response = await fetchData({ endpoint: "api/profiles/id" });
+    console.log(response);
+    setUniqueID(response.data.id);
+  };
+  useEffect(() => {
+    generateId();
+  }, []);
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("Form data on submit:", formData);
+    setFilteredPanchayats("");
   };
-
+  const isFormFilled = Object.values(formData).every((value) => value !== "");
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -27,7 +47,13 @@ function MyProfilePage() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData((prev) => ({ ...prev, image: file }));
+    if (file && file.size < 1024 * 1024) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, imageBase64: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const [qrUrl, setQrUrl] = useState("");
@@ -35,69 +61,106 @@ function MyProfilePage() {
 
   const handleCapture = async () => {
     const element = captureRef.current;
-    if (!element) return;
-
-    try {
-      const canvas = await html2canvas(element, {
-        useCORS: true, 
-        backgroundColor: null, 
-      });
-
-      const dataUrl = canvas.toDataURL("image/png");
-
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "screenshot.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Screenshot failed:", error);
+    if (!element) {
+      console.error("Element to capture not found.");
+      return;
     }
-  };
 
-  const generateQR = async () => {
     try {
-      let text = "I am a pony!";
-      const url = await QrCode.toDataURL(text);
+      const qrData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        panchayath: formData.panchayath,
+        district: formData.district,
+      };
+      const text = JSON.stringify(qrData); // Only include safe fields
+      const url = await QrCode.toDataURL(text, { errorCorrectionLevel: "H" });
       setQrUrl(url);
-    } catch (err) {
-      console.error(err);
+      const canvas = await new Promise((resolve)=>{
+        setTimeout(async()=>{
+          const result = await html2canvas(element, {
+            useCORS: true,
+            scale: 2,
+        });
+        resolve(result);
+      },50);  
+      });
+      const dataURL = canvas.toDataURL("image/png");
+      const response = await fetch(dataURL);
+      const imageBlob = await response.blob();
+      const link = document.createElement("a");
+      link.href = dataURL;
+      const formDatas = new FormData();
+      formDatas.append("id", uniqueID);
+      formDatas.append("name", formData.name);
+      formDatas.append("dob", formData.dob);
+      formDatas.append("phone", formData.phone);
+      formDatas.append("email", formData.email);
+      formDatas.append("district", formData.district);
+      formDatas.append("panchayat", formData.panchayat);
+      formDatas.append("image", imageBlob, "card.png");
+      formDatas.append("category", formData.category);
+      formDatas.append("gender", formData.gender);
+      formDatas.append("qrcode", url);
+
+      const apiResponse = await postData({ endpoint: "api/profiles", data: formDatas });
+      console.log(apiResponse);
+      if (response.status == 200) {
+        toast.success("card succssfully send to your email id");
+        generateId();
+      }
+
+      link.download = "card.png";
+      link.click();
+    } catch (error) {
+      console.error("Capture failed:", error);
+      toast.error("Capture failed");
     }
   };
 
   return (
     <ProfileProvider>
-      <div className="d-flex flex-column-reverse flex-md-row justify-content-between p-4 m-2 border border-success gap-2" style={{
-        backgroundColor: '#F0FFFA',
-        maxWidth: '1300px'
-      }}>
-        <div className="d-flex flex-column gap-2">
-          <ProfileUpdateForm
-            handleCapture={handleCapture}
-            handleChange={handleChange}
-            handleInputChange={handleInputChange}
-            handleFileChange={handleFileChange}
-            formData={formData}
-            setFormData={setFormData}
-          />
-        </div>
-        <div className="d-flex flex-column  gap-2">
-          <DynamicCardGenerator
-            qrUrl={qrUrl}
-            handleCapture={handleCapture}
-            captureRef={captureRef}
-            generateQR={generateQR}
-            handleChange={handleChange}
-            handleInputChange={handleInputChange}
-            handleFileChange={handleFileChange}
-            formData={formData}
-          />
-        </div>
+      <div fluid className="  p-md-3 border rounded border-success m-2">
+        <Row className="d-flex align-content-center justify-content-center g-5">
+          <Col xs={12} md={12} xl={6}>
+            <Card className=" px-md-4  border-0">
+              <Card.Body >
+                <ProfileUpdateForm
+                  isFormFilled={isFormFilled}
+                  handleCapture={handleCapture}
+                  handleChange={handleChange}
+                  handleInputChange={handleInputChange}
+                  handleFileChange={handleFileChange}
+                  formData={formData}
+                  setFormData={setFormData}
+                  districts={[]}
+                  selectedDistrict={selectedDistrict}
+                  setSelectedDistrict={setSelectedDistrict}
+                  filteredPanchayats={filteredPanchayats}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={12} xl={6}>
+            <Card className="d-flex justify-content-sm-center   border-0 mt-5">
+              <Card.Body className="">
+                <DynamicCardGenerator
+                  qrUrl={qrUrl}
+                  isFormFilled={isFormFilled}
+                  handleCapture={handleCapture}
+                  captureRef={captureRef}
+                  uniqueID={uniqueID}
+                  formData={formData}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </ProfileProvider>
   );
 }
 
 export default MyProfilePage;
-

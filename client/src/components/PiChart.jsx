@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { Chart, PieController, ArcElement, Legend, Tooltip } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-Chart.register(PieController, ArcElement, Legend, Tooltip);
+Chart.register(PieController, ArcElement, Legend, Tooltip, ChartDataLabels);
 
 function PiChart({ chartData }) {
   const chartRef = useRef(null);
@@ -14,8 +15,16 @@ function PiChart({ chartData }) {
         plugins: {
           legend: { display: true, position: "bottom" },
           tooltip: { enabled: true },
+          datalabels: {
+            color: "#333",
+            font: { weight: "bold", size: 16 },
+            formatter: (value, context) => {
+              const label = context.chart.data.labels[context.dataIndex];
+              return `${label}: ${value}`;
+            }, 
+          },
         },
-        cutout: "70%", 
+        cutout: "70%",
       },
     });
 
@@ -24,9 +33,9 @@ function PiChart({ chartData }) {
 
   return (
     <div>
-      <h3 style={{ color: "green" }} className="fw-bold d-flex justify-content-center align-items-center mb-5">
+      <h5 style={{ color: "green" }} className="fw-bold d-flex justify-content-center align-items-center mb-5">
         Gender Details
-      </h3>
+      </h5>
       <canvas ref={chartRef} style={{ width: "100%", height: "auto" }} />
     </div>
   );
