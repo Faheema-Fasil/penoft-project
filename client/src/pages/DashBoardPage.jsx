@@ -55,7 +55,7 @@ function DashBoardPage() {
   };
 
   return (
-    <div className="custom-border p-4 my-5 bg-danger-subtle ">
+    <div className="custom-border p-4 m-5 bg-danger-subtle ">
       <Row className="g-4 justify-content-center align-content-center">
         <Col xs={12} md={8} lg={4} className="d-flex justify-content-center">
           <div className="custom-border p-3 w-100">

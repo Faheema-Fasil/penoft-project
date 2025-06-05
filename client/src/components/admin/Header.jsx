@@ -35,9 +35,9 @@ function Header({handleShow}) {
        
 
     <Container fluid className=" bg-white" > 
-      <Row className="d-flex flex-row flex-md-row align-items-center column"> 
+      <Row className="d-flex justify-content-between align-items-center flex-wrap"> 
 
-        <Col xs={12} md={8} className="text-center text-md-start mb-2 mb-md-0"> {/* Center text on mobile, left align on desktop */}
+        <Col xs="auto" className="text-start mb-2 mb-md-0"> {/* Center text on mobile, left align on desktop */}
           <h3
             className="mb-1 fw-bold text-dark"
             style={{ fontSize: "1.5rem", wordWrap: "break-word" }} // Slightly larger font for prominence
@@ -50,11 +50,7 @@ function Header({handleShow}) {
         </Col>
 
         {/* Right Section: Bell Icon and User Dropdown */}
-        <Col
-          xs={12}
-          md={4}
-          className="d-flex justify-content-center justify-content-md-end align-items-center mt-2 mt-md-0" // Center on mobile, end on desktop
-        >
+        <Col xs="auto" className="d-flex justify-content-end align-items-center mt-2 mt-md-0">
           {/* Bell Icon - visible only on medium and larger screens */}
           <div className="position-relative me-3 d-none d-md-block">
             <BellFill size={22} className="text-secondary" /> {/* Adjusted size and color */}

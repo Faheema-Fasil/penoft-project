@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import cardbg from "../assets/2.png";
 import { Button } from "react-bootstrap";
 
-function DynamicCardGenerator({ qrUrl, captureRef, formData ,uniqueID}) {
+function DynamicCardGenerator({ qrUrl, captureRef, formData, uniqueID }) {
   const today = new Date().toLocaleDateString();
-  const [position, setPosition] = useState({ x: 30, y: 80 });
+  const [position, setPosition] = useState({ x: 25, y: -110 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const handleDragStart = (e) => {
@@ -12,7 +12,7 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData ,uniqueID}) {
   };
 
   const handleDrag = (e) => {
-    if (e.clientX === 0 && e.clientY === 0) return; // skip ghost drag
+    if (e.clientX === 0 && e.clientY === 0) return; 
     setPosition({
       x: e.clientX - dragStart.x,
       y: e.clientY - dragStart.y,
@@ -20,20 +20,21 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData ,uniqueID}) {
   };
   React.useEffect(() => {
     console.log("formData", formData);
-
   }, [formData]);
 
   return (
     <div className="card-outer  mt-3 " >
-      <div className="card-inner p-3" >
-        <img src={cardbg} ref={captureRef} className="card-bg " alt="" />
+      <div className="card-inner p-3" ref={captureRef}>
+        <img src={cardbg} className="card-bg " alt="" />
 
         <div className="id-badge">ID {uniqueID}</div>
 
         <div className="profile-details">
           <img
-            src={formData.imageBase64 || "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"}
-
+            src={
+              formData.imageBase64 ||
+              "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"
+            }
             alt="Profile"
             className="profile-pic"
             onDragStart={handleDragStart}
@@ -63,9 +64,7 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData ,uniqueID}) {
             </>
           )}
         </div>
-        <Button className="preview-btn"  >
-          Live Preview
-        </Button>
+        <Button className="preview-btn btn-success">Live Preview</Button>
       </div>
 
       <div className="drag-hint">Drag and adjust image position inside box</div>

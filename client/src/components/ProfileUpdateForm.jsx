@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Select from "react-select";
 import { fetchData } from "../Api/service";
+import { toast } from "react-toastify";
 
 
 
@@ -54,7 +55,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
     });
 
     if (!allFilled) {
-      alert("Please fill all required fields before submitting.");
+      toast.warning("Please fill all required fields before submitting.");
       console.log("Validation failed: ", formData);
       return;
     }
@@ -101,7 +102,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
   }, [selectedDistrictOption, formData.panchayat, setFilteredPanchayats, setFormData, locationData]); // Added locationData to dependencies
 
   return (
-    <Form className=" py-sm-1  px-sm-5  bg-white">
+    <Form className=" py-sm-4  px-sm-4  bg-white">
       <Row className="mb-1">
         <Form.Group as={Col} xs={12} controlId="formFullName" className="p-2">
           <Form.Label className="fw-bolder text-dark mb-1">
