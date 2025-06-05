@@ -7,12 +7,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null);
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
-    userType: "", 
+    userType: "",
   });
 
   const handleRegister = async (e) => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await API.post("/api/users/register", { name, email, password, userType });
       console.log(res.data);
-      
+
       alert("Registration successful. Please login.");
       navigate("/");
     } catch (error) {
@@ -37,18 +37,17 @@ export const AuthProvider = ({ children }) => {
   };
   const login = (userData, token) => {
     setUser({ ...userData, token });
+    localStorage.setItem("authToken", token);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
-  
 
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("authToken");
 
-    const logout = () => {
-      setUser(null);
-      localStorage.removeItem('authToken'); 
-
-      localStorage.removeItem('user');
-      navigate("/");
-    };
-
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout, handleRegister, registerData, setRegisterData }}>

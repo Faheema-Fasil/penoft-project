@@ -1,24 +1,28 @@
 import React, { useRef, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap"; // Import Container, Row, Col, Card
-import ProfileUpdateForm from "../components/ProfileUpdateForm"; // Assuming this path is correct
-import DynamicCardGenerator from "../components/DynamicCardGenerator"; // Assuming this path is correct
-import { ProfileProvider } from "../reactContext/CardGenator"; // Assuming this path is correct
+import { Container, Row, Col, Card } from "react-bootstrap"; 
+import ProfileUpdateForm from "../components/ProfileUpdateForm"; 
+import DynamicCardGenerator from "../components/DynamicCardGenerator"; 
+import { ProfileProvider } from "../reactContext/CardGenator"; 
 import html2canvas from "html2canvas";
 import QrCode from "qrcode";
 import { toast } from "react-toastify";
 
+import { postData } from "../Api/service";
+
 function MyProfilePage() {
   const [formData, setFormData] = useState({
     name: "",
-    image: null, // Changed to null to properly handle file object
+    image: null,
     dob: "",
     phone: "",
     email: "",
     district: "",
-    panchayat: "", // Corrected typo from 'panchayath' to 'panchayat' for consistency
+    panchayat: "",
+    category: "",
+    gender: "",
   });
 
-  // State for selected district and filtered panchayats for ProfileUpdateForm
+
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [filteredPanchayats, setFilteredPanchayats] = useState([]);
 
@@ -43,45 +47,20 @@ function MyProfilePage() {
       reader.readAsDataURL(file);
     }
   };
-  
-  
+
+
 
   const [qrUrl, setQrUrl] = useState("");
-  const captureRef = useRef(null); 
+  const captureRef = useRef(null);
 
   const handleCapture = async () => {
-  const element = captureRef.current;
-  if (!element) {
-    console.error("Element to capture not found.");
-    return;
-  }
+    const element = captureRef.current;
+    if (!element) {
+      console.error("Element to capture not found.");
+      return;
+    }
 
-  try {
-    const canvas = await html2canvas(element, {
-      useCORS: true,
-      scale: 2, // sharper image
-    });
-    const dataURL = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = dataURL;
-    link.download = "card.png";
-    link.click();
-  } catch (error) {
-    console.error("Capture failed:", error);
-    toast.error("Capture failed")
-  }
-};
-
-  
-
-  const generateQR = async () => {
     try {
-      if (!formData.name || !formData.email || !formData.phone) {
-        alert("Please fill Name, Email, and Phone to generate QR code.");
-        return;
-      }
-  
-      // Create a clone and remove file/blob type fields
       const qrData = {
         name: formData.name,
         email: formData.email,
@@ -92,13 +71,43 @@ function MyProfilePage() {
       const text = JSON.stringify(qrData); // Only include safe fields
       const url = await QrCode.toDataURL(text, { errorCorrectionLevel: 'H' });
       setQrUrl(url);
-      console.log("QR Code generated successfully!");
-    } catch (err) {
-      console.error("QR Code generation failed:", err);
-      alert("Failed to generate QR code. Please check your data.");
+      const canvas = await html2canvas(element, {
+        useCORS: true,
+        scale: 2, // sharper image
+      });
+      const dataURL = canvas.toDataURL("image/png");
+      const response = await fetch(dataURL);
+      const imageBlob = await response.blob();
+      const link = document.createElement("a");
+      link.href = dataURL;
+      const formDatas = new FormData()
+      formDatas.append("name", formData.name)
+      formDatas.append("dob", formData.dob)
+      formDatas.append("phone", formData.phone)
+      formDatas.append("email", formData.email)
+      formDatas.append("district", formData.district)
+      formDatas.append("panchayat", formData.panchayat)
+      formDatas.append("image", imageBlob, "card.png");
+      formDatas.append("category", formData.category)
+      formDatas.append("gender", formData.gender)
+      formDatas.append("qrcode",url)
+
+      const apiResponse = await postData({ endpoint: "api/profiles", data: formDatas })
+      console.log(apiResponse);
+      toast.success("card succssfully send to your email id")
+
+      // link.download = "card.png";
+      // link.click();
+    } catch (error) {
+      console.error("Capture failed:", error);
+      toast.error("Capture failed")
     }
   };
-  
+
+
+
+ 
+
 
   return (
     <ProfileProvider>
@@ -109,7 +118,7 @@ function MyProfilePage() {
             <Card className=" p-md-2  border-0"> {/* Added Card, padding, shadow, and h-100 for equal height */}
               <Card.Body>
                 <ProfileUpdateForm
-                isFormFilled={isFormFilled}
+                  isFormFilled={isFormFilled}
                   handleCapture={handleCapture} // This handleCapture is for the form's submit button
                   handleChange={handleChange}
                   handleInputChange={handleInputChange}
@@ -135,7 +144,7 @@ function MyProfilePage() {
                   isFormFilled={isFormFilled}
                   handleCapture={handleCapture} // This handleCapture is for the card's download button
                   captureRef={captureRef}
-                  generateQR={generateQR}
+
                   formData={formData}
                 />
               </Card.Body>

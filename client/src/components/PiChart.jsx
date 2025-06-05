@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { Chart, PieController, ArcElement, Legend, Tooltip } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-Chart.register(PieController, ArcElement, Legend, Tooltip);
+Chart.register(PieController, ArcElement, Legend, Tooltip, ChartDataLabels);
 
 function PiChart({ chartData }) {
   const chartRef = useRef(null);
@@ -14,8 +15,13 @@ function PiChart({ chartData }) {
         plugins: {
           legend: { display: true, position: "bottom" },
           tooltip: { enabled: true },
+          datalabels: {
+            color: "#333",
+            font: { weight: "bold", size: 16 },
+            formatter: (value, context) => value, 
+          },
         },
-        cutout: "70%", 
+        cutout: "70%",
       },
     });
 

@@ -1,12 +1,12 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import cardbg from "../assets/2.png";
 import { Button } from "react-bootstrap";
 
-function DynamicCardGenerator({ qrUrl, generateQR, captureRef, formData,isFormFilled }) {
+function DynamicCardGenerator({ qrUrl, captureRef, formData, isFormFilled }) {
   const today = new Date().toLocaleDateString();
   const [position, setPosition] = useState({ x: 30, y: 80 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
- 
+
   const handleDragStart = (e) => {
     setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
   };
@@ -32,7 +32,7 @@ function DynamicCardGenerator({ qrUrl, generateQR, captureRef, formData,isFormFi
 
         <div className="profile-details">
           <img
-src={formData.imageBase64 || "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"}
+            src={formData.imageBase64 || "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"}
 
             alt="Profile"
             className="profile-pic"
@@ -50,26 +50,22 @@ src={formData.imageBase64 || "https://www.mauicardiovascularsymposium.com/wp-con
           />
           <div className="details-text">
             <p className="name">{formData.name || "YOUR NAME"}</p>
-            <p className="info">Panchayat: {formData.panchayath || "Panchayat name"}</p>
+            <p className="info">Panchayat: {formData.panchayat || "Panchayat name"}</p>
             <p className="info">{formData.district || "District"} District</p>
           </div>
         </div>
 
         <div className="qr-block">
-          {qrUrl ? (
+          {qrUrl && (
             <>
               <img src={qrUrl} alt="QR Code" className="qr-img" />
               <p className="issue-date">Self Issued: {today}</p>
             </>
-          ) : (
-            <Button onClick={generateQR} className="qr-btn bg-success" disabled={!isFormFilled}>
-              {isFormFilled ? "Create QR" : "Please fill all fields"}
-            </Button>
           )}
         </div>
-      <Button className="preview-btn"  >
-        Live Preview
-      </Button>
+        <Button className="preview-btn"  >
+          Live Preview
+        </Button>
       </div>
 
       <div className="drag-hint">Drag and adjust image position inside box</div>

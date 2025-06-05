@@ -4,14 +4,14 @@ const { transporter } = require("../utils/email");
 
 exports.createProfile = async (req, res) => {
   try {
-    const { name, dob, phone, email, district, panchayat,gender,category } = req.body;
+    const { name, dob, phone, email, district, panchayat,gender,category,qrcode } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ error: "Image file is required" });
     }
 
-    const qrData = JSON.stringify({ name, phone, district, panchayat,gender,category  });
-    const qrCode = await QrCode.toDataURL(qrData);
+
+    const qrCode = qrcode;
 
     const imagePath = req.file.path;
     const imageDownloadLink = `${req.protocol}://${req.get("host")}/${imagePath.replace(/\\/g, "/")}`;

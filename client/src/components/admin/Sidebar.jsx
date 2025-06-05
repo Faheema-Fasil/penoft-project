@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React from "react";
 import { useAuth } from "../../reactContext/AuthContext";
 import {
   FaTh,
@@ -11,134 +11,114 @@ import {
   FaUser,
   FaCog,
   FaSignOutAlt,
+  FaTimes,
 } from "react-icons/fa";
 
 import logo from "../../assets/log.ico";
 import { Link, useLocation } from "react-router-dom";
-
 import { Button } from "react-bootstrap";
 
-function Sidebar({handleClose}) {
-  const {logout}=useAuth();
+function Sidebar({ handleClose }) {
+  const { logout } = useAuth();
   const location = useLocation();
 
+  // Helper for active nav
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <>
+    <div className="sidebar-custom">
+      {/* Close Button (mobile only) */}
+      <Button variant="link" onClick={handleClose} className="sidebar-close-btn d-lg-none" aria-label="Close sidebar">
+        <FaTimes size={22} />
+      </Button>
 
-
-
-
-
-      <div className={`d-flex flex-column ps-1   justify-content-evenly`} style={{ width: "250px",height:"100vh"}}>
-        <div className="p-3">
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+      }}>
+        <div className="sidebar-logo">
           <Link onClick={handleClose} to="/myprofile">
             <img src={logo} alt="Logo" className="img-fluid" style={{ maxWidth: "100px" }} />
           </Link>
         </div>
-        <ul className="nav nav-pills flex-column  ">
-          <li className="nav-item">
-            <Link onClick={handleClose}
-            
-              to="/dashboard"
-
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "/dashboard" ? "bg-success text-light" : ""}`}
-
-            >
-              <FaTh className={"me-3"} />
-              <span className={`${location.pathname === "/dashboard" ? "bg-success text-light" : ""}`}>Dashboard</span>
+        <ul className="sidebar-nav m-3">
+          <li>
+            <Link onClick={handleClose} to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
+              <FaTh className="me-3" />
+              Dashboard
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6 d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaMapMarkerAlt className="me-3" />
-              <span>Menu 02</span>
+              Menu 02
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaArchive className="me-3" />
-              <span>Menu 03</span>
+              Menu 03
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaWarehouse className="me-3" />
-              <span>Menu 04</span>
+              Menu 04
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaLink className="me-3" />
-              <span>Menu 05</span>
+              Menu 05
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaMedal className="me-3" />
-              <span>Menu 06</span>
+              Menu 06
             </Link>
           </li>
-          <li className="nav-item">
-            <Link onClick={handleClose}
-              to="*"
-              className={`btn nav-link fs-6  d-flex align-items-center text-dark ${location.pathname === "*" ? "bg-success" : ""}`}
-            >
+          <li>
+            <Link onClick={handleClose} to="*">
               <FaDownload className="me-3" />
-              <span>Downloads</span>
+              Downloads
             </Link>
           </li>
         </ul>
-
-        <div className="px-3  gap-3 ">
-          <Link onClick={handleClose} to="/myprofile" className={`btn text-dark d-flex align-items-center w-100  ${location.pathname === "/myprofile" ? "bg-success" : ""}`}>
-            <FaUser className="me-2" />
-            <span>My Profile</span>
-          </Link>
-          <ul className="nav nav-pills flex-column">
-            <li className="nav-item">
-              <Link onClick={handleClose}
-                to="*"
-                className={`btn nav-link d-flex align-items-center text-dark py-2 ${location.pathname === "/settings" ? "bg-success" : ""}`}
-              >
-                <FaCog className="me-2" />
-                <span>Settings</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Button onClick={logout}
-               
-                className={`btn nav-link d-flex align-items-center text-dark py-2 `}
-              >
-                <FaSignOutAlt className="me-2" />
-                <span >Logout</span>
-              </Button>
-            </li>
-          </ul>
-          <div className="px-3 mt-3 text-dark text-center  ">
-            <p style={{ fontSize: "12px", fontFamily: "fantasy" }}> Ver 1.21</p>
-          </div>
-        </div>
       </div>
 
-    </>
+      <div className="sidebar-bottom">
+        <Link onClick={handleClose} to="/myprofile" className={isActive("/myprofile") ? "active" : ""}>
+          <FaUser className="me-2" />
+          My Profile
+        </Link>
+        <ul>
+          <li>
+            <Link onClick={handleClose} to="*">
+              <FaCog className="me-2" />
+              Settings
+            </Link>
+          </li>
+          <li>
+            <Link
+              onClick={() => {
+                handleClose();
+                logout();
+              }}
+              to="*"
+            >
+              <FaSignOutAlt className="me-2" />
+              <span>Logout</span>
+            </Link>
+          </li>
+        </ul>
+        <div className="sidebar-version">
+          <p>Ver 1.21</p>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default Sidebar;
-
