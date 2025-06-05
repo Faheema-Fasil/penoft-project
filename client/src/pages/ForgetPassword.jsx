@@ -48,7 +48,7 @@ function ForgetPassword() {
           className="w-100  p-4"
           style={{
             maxWidth: "400px", // Decreased max-width
-            marginTop:"150px",
+            marginTop:"100px",
             border: "1.5px solid #a3e6cb",
             borderRadius: "12px",
             background: "#ffffff",

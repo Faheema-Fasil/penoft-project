@@ -61,7 +61,7 @@ function ProfileUpdateForm({ handleCapture, handleInputChange, handleFileChange,
     
 
     handleCapture();
-    setFormData({
+     setFormData({
       name: "",
       dob: "",
       phone: "",
