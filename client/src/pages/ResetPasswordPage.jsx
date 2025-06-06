@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { confirmPasswordReset } from '../Api/service';
-import Header from '../components/Header';
+
 
 function ResetPasswordPage() {
     const navigate = useNavigate();
