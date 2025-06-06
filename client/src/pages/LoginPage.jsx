@@ -19,7 +19,7 @@ function LoginPage({ reg }) {
   return (
     <>
 
-      <div>
+      <div >
         <LoginForm reg={reg} />
       </div>
 

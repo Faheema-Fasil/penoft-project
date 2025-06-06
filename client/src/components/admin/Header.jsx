@@ -16,8 +16,8 @@ function Header({handleShow}) {
 
   return (
     <>
- <nav className="navbar navbar-expand-lg navbar-light p-1"> {/* Using navbar-light for better visibility of toggler icon on light backgrounds */}
-    <div className="container-fluid d-flex justify-content-between align-items-center d-md-none"> {/* Use flexbox to space items */}
+ <nav className="navbar navbar-expand-lg navbar-light p-1 "> {/* Using navbar-light for better visibility of toggler icon on light backgrounds */}
+    <div className="container-fluid d-flex justify-content-between align-items-center d-md-none "> {/* Use flexbox to space items */}
       {/* Left Toggler (visible on small screens only) */}
        <Link to="/dashboard">
        <img src={logo} width={100} alt="" />
@@ -26,7 +26,7 @@ function Header({handleShow}) {
      
       <button
         onClick={handleShow}
-        className="navbar-toggler d-lg-none" // Hide on large screens and up
+        className="navbar-toggler" // Hide on large screens and up
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNavAltMarkup"

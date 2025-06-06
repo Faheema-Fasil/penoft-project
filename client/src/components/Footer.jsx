@@ -1,4 +1,5 @@
 // Footer.jsx
+
 import React from 'react'
 
 function Footer() {
@@ -9,6 +10,7 @@ function Footer() {
     <div className='text-center  border-top  ' style={{
 
       width: "100%",
+      position:"bottom",
       margin:"none",
       marginBottom:"none",
       boxSizing: "none"

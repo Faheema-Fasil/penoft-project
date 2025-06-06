@@ -40,19 +40,20 @@ function ResetPasswordPage() {
     return (
         <>
 
-        <div className="d-flex flex-row justify-content-center align-items-center  pt-5">
+        <div className="d-flex flex-row justify-content-center align-items-center  ">
             <div
-                className="w-100 p-4"
+                className="w-100 p-2 p-lg-5 w-auto"
                 style={{
                     maxWidth: "500px",
+                    margin:"40px",
                     border: "1.5px solid #a3e6cb",
                     borderRadius: "12px",
                     background: "#ffffff",
                     boxShadow: "0 8px 16px rgba(0,0,0,0.1)"
                 }}
             >
-                <form onSubmit={handleSubmit} className="w-100 p-3" style={{ background: "transparent", border: "none", padding: 0 }}>
-                    <h3 className="fw-bold text-dark mb-4">Reset Password</h3>
+                <form onSubmit={handleSubmit} className="w-100 p-2 " style={{ background: "transparent", border: "none", padding: 0 }}>
+                    <h3 className="fw-bold text-dark ">Reset Password</h3>
 
                     <div className="mb-3 px-3">
                         <input
