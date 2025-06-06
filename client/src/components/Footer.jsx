@@ -7,7 +7,8 @@ function Footer() {
     <div className='text-center  border-top  ' style={{
 
       width: "100%",
-      margin:"none"
+      margin:"none",
+      marginBottom:"none"
 
 
 
