@@ -15,6 +15,7 @@ box-sizing: none;
   border: 1px solid transparent;
 }
 
+
 .login-form {
   padding: 100px;
 }
@@ -203,14 +204,14 @@ box-sizing: none;
 
 .sidebar-custom {
   width: 250px;
-  height: 100vh;
+  height: 100%;
   background: #fff;
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   justify-content: space-between;
 }
 
@@ -226,17 +227,17 @@ box-sizing: none;
 
 .sidebar-logo {
   text-align: center;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 
 .sidebar-nav {
   list-style: none;
   padding-left: 0;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 
 .sidebar-nav li {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .sidebar-nav a,
@@ -246,7 +247,7 @@ box-sizing: none;
   align-items: center;
   color: #222;
   text-decoration: none;
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 6px;
   font-weight: 500;
   transition: background 0.15s, color 0.15s;
@@ -270,17 +271,17 @@ box-sizing: none;
 }
 
 .sidebar-bottom > a {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .sidebar-bottom ul {
   list-style: none;
   padding-left: 0;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .sidebar-bottom ul li {
-  margin-bottom: 0.25rem;
+  /* margin-bottom: 0.25rem; */
 }
 
 .sidebar-logout-btn {
@@ -296,7 +297,7 @@ box-sizing: none;
   color: #888;
   font-size: 12px;
   font-family: fantasy;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 /* Responsive: show close button only on mobile */
@@ -308,12 +309,6 @@ box-sizing: none;
 .dropdown-logout-item:hover {
   background-color: #219653 !important; /* Green background on hover */
   color: #f8f9fa !important; /* Light text color (e.g., light grey or white) */
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "IBM Plex Sans", sans-serif;
 }
 
 .card-outer {
@@ -452,8 +447,10 @@ box-sizing: none;
   }
 
   .profile-pic {
-    width: clamp(50px, 20vw, 90px);
-    height: clamp(100px, 20vw, 50px);
+    width: clamp(80px, 25vw, 99px);
+    height: clamp(80px, 10vw, 10px);
+    object-fit: cover;
+    border-radius: 50%;
   }
 
   .qr-block {

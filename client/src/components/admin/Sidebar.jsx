@@ -33,7 +33,7 @@ function Sidebar() {
 
     <>
 
-    <div className="sidebar-custom">
+    <div className="sidebar-custom ">
       {/* Close Button (mobile only) */}
       <Button variant="link" onClick={handleClose} className="sidebar-close-btn d-md-none" aria-label="Close sidebar">
         <FaTimes size={22} />
@@ -42,14 +42,14 @@ function Sidebar() {
       <div style={{
         display: "flex",
         flexDirection: "column",
-        gap: "20px",
+        gap: "10px",
       }}>
-        <div className="sidebar-logo">
+        <div className="m-1">
           <Link onClick={handleClose} to="/myprofile">
             <img src={logo} alt="Logo" className="img-fluid" style={{ maxWidth: "100px" }} />
           </Link>
         </div>
-        <ul className="sidebar-nav m-3">
+        <ul className="sidebar-nav ">
           <li>
             <Link onClick={handleClose} to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
               <FaTh className="me-3" />

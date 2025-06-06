@@ -11,7 +11,8 @@ function AuthLayout() {
          style={{
          
         minHeight: "calc(100vh - 150px)",
-        background: "#e9fcf4"
+        background: "#e9fcf4",
+        // marginTop:"50px"
       }}>
 
         <Outlet />

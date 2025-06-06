@@ -17,7 +17,7 @@ require("./DB/database");
 mongoose.set('bufferCommands', false);
 
 app.use(bodyParser.json());
-app.use(cors({origin:'https://penoft-project.vercel.app',
+app.use(cors({origin:'*',
   credentials: true 
 }));
 

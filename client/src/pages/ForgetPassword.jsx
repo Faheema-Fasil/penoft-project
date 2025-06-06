@@ -45,10 +45,11 @@ function ForgetPassword() {
         className=" d-flex flex-row justify-content-center  align-items-center  "
       >
         <div
-          className="w-100  p-4"
+          className="w-100 p-4 p-lg-5 w-auto"
           style={{
             maxWidth: "400px", // Decreased max-width
-            marginTop:"100px",
+            margin:"40px",
+            marginTop:"80px",
             border: "1.5px solid #a3e6cb",
             borderRadius: "12px",
             background: "#ffffff",

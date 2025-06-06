@@ -58,13 +58,15 @@ function LoginForm({ reg }) {
     <div
       className="d-flex flex-column justify-content-center align-items-center" // Added vertical padding
       style={{
-        minHeight: "calc(100vh - 150px)",
-        background: "#e9fcf4"
+        // margin:"50px",
+        // minHeight: "calc(100vh - 150px)",
+        // background: "#e9fcf4"
       }}
     >
       <div
-        className="w-100 p-4 p-lg-2"
+        className="w-100 p-4 p-lg-2 w-auto"
         style={{
+          margin:"50px",
           maxWidth: "500px",
           border: "1.5px solid #a3e6cb",
           borderRadius: "12px",
