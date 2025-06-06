@@ -33,8 +33,10 @@ function AdminLayout() {
         <div className="flex-grow-1 outlet-wrapper overflow-auto">
           <Outlet />
         </div>
+<div style={{margin:"none"}}>
 
         <Footer />
+</div>
       </div>
     </div>
   );
