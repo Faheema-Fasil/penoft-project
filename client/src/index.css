@@ -443,7 +443,7 @@ box-sizing: none;
 
   .profile-details {
     top: clamp(130px, 25vw, 90px); /* Adjust positioning */
-    right: 10px;
+    right: 20px;
   }
 
   .profile-pic {
