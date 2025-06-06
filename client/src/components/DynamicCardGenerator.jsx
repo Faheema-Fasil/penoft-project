@@ -54,29 +54,34 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData, uniqueID }) {
         <div className="id-badge">ID {uniqueID}</div>
 
         <div className="profile-details">
-          {imageLoaded && (
-            <img
-              src={
-                formData.imageBase64 ||
-                "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"
-              }
-              alt="Profile"
-              className="profile-pic"
-              onDragStart={handleDragStart}
-              onDrag={handleDrag}
-              onDragEnd={handleDragEnd}
-              onTouchStart={handleDragStart}
-              onTouchMove={handleDrag}
-              onTouchEnd={handleDragEnd}
-              style={{
-                position: "absolute",
-                left: `${position.x}px`,
-                top: `${position.y}px`,
-                cursor: "move",
-                touchAction: "none", // Prevent default touch scrolling
-              }}
-            />
-          )}
+         
+        <img
+  src={
+    imageLoaded && formData.imageBase64
+      ? formData.imageBase64
+      : "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"
+  }
+  alt="Profile"
+  className="profile-pic"
+  onLoad={() => {
+    if (formData.imageBase64) setImageLoaded(true);
+  }}
+  onDragStart={handleDragStart}
+  onDrag={handleDrag}
+  onDragEnd={handleDragEnd}
+  onTouchStart={handleDragStart}
+  onTouchMove={handleDrag}
+  onTouchEnd={handleDragEnd}
+  style={{
+    position: "absolute",
+    left: `${position.x}px`,
+    top: `${position.y}px`,
+    cursor: "move",
+    touchAction: "none",
+  }}
+/>
+
+          
           <div className="details-text">
             <p className="name">{formData.name || "YOUR NAME"}</p>
             <p className="info">Panchayat: {formData.panchayat || "Panchayat name"}</p>
