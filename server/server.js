@@ -17,15 +17,17 @@ require("./DB/database");
 mongoose.set('bufferCommands', false);
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({origin:'https://penoft-project.vercel.app',
+  credentials: true 
+}));
 
-app.use(authMiddleware.authenticate);
+// app.use(authMiddleware.authenticate);
 app.use("/uploads", express.static("uploads"));
 
-app.use("/api/users", userRoutes);
-app.use("/api/profiles", profileRoutes);
-app.use("/api/locations", locationRoutes);
-app.use("/api/dashboard", dashboardRoutes)
+app.use("/api/users",userRoutes);
+app.use("/api/profiles",authMiddleware.authenticate, profileRoutes);
+app.use("/api/locations",authMiddleware.authenticate, locationRoutes);
+app.use("/api/dashboard",authMiddleware.authenticate, dashboardRoutes)
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
