@@ -308,3 +308,171 @@
   background-color: #219653 !important; /* Green background on hover */
   color: #f8f9fa !important; /* Light text color (e.g., light grey or white) */
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.card-outer {
+  width: 100%;
+  max-width: 450px; /* Constrain max width for larger screens */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.card-inner {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #02ab3d;
+  background: #fff;
+  border-radius: 10px;
+  aspect-ratio: 4 / 5; /* Maintain card aspect ratio */
+}
+
+.card-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure background image covers the card */
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.id-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #219653;
+  color: #fff;
+  padding: 3px 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: clamp(10px, 3vw, 12px); /* Responsive font size */
+  z-index: 2;
+}
+
+.profile-details {
+  position: absolute;
+  top: 150px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.profile-pic {
+  width: clamp(70px, 25vw, 90px); /* Responsive size */
+  height: clamp(70px, 25vw, 90px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  margin-bottom: 8px;
+  z-index: 3;
+  user-select: none; /* Prevent text selection during drag */
+  -webkit-user-drag: none; /* Prevent image dragging in Safari */
+}
+
+.details-text .name {
+  color: #219653;
+  font-weight: bold;
+  margin: 0;
+  font-size: clamp(14px, 4vw, 18px); /* Responsive font size */
+  text-align: center;
+}
+
+.details-text .info {
+  color: #222;
+  font-size: clamp(10px, 3vw, 12px);
+  margin: 2px 0;
+  text-align: center;
+}
+
+.qr-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: center;
+  z-index: 2;
+}
+
+.qr-img {
+  width: clamp(40px, 15vw, 50px); /* Responsive QR code size */
+  height: clamp(40px, 15vw, 50px);
+}
+
+.issue-date {
+  font-size: clamp(8px, 2.5vw, 9px);
+  color: #fff;
+  margin-top: 4px;
+}
+
+.preview-btn {
+  background: #219653;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 10px;
+  border: none;
+  font-size: clamp(12px, 4vw, 14px);
+}
+
+.drag-hint {
+  text-align: center;
+  margin-top: 10px;
+  color: #888;
+  font-size: clamp(10px, 3vw, 12px);
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 576px) {
+  .card-outer {
+    padding: 8px;
+  }
+
+  .card-inner {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .profile-details {
+    top: clamp(130px, 25vw, 90px); /* Adjust positioning */
+    right: 10px;
+  }
+
+  .profile-pic {
+    width: clamp(50px, 20vw, 90px);
+    height: clamp(100px, 20vw, 50px);
+  }
+
+  .qr-block {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .qr-img {
+    width: clamp(30px, 12vw, 40px);
+    height: clamp(30px, 12vw, 40px);
+  }
+
+  .id-badge {
+    top: 10px;
+    left: 10px;
+    padding: 2px 10px;
+  }
+}
+
+/* Ensure images are loaded for capture */
+img {
+  image-rendering: -webkit-optimize-contrast; /* Improve rendering for capture */
+}
