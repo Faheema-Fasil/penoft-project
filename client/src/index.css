@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+box-sizing: none;
   box-shadow: none;
   font-family: "IBM Plex Sans", sans-serif;
 }
