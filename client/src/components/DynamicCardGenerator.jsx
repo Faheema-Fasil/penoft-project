@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cardbg from "../assets/2.png";
 import { Button } from "react-bootstrap";
 
@@ -6,49 +6,77 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData, uniqueID }) {
   const today = new Date().toLocaleDateString();
   const [position, setPosition] = useState({ x: 25, y: -110 });
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Ensure image is preloaded for capture
+  useEffect(() => {
+    if (formData.imageBase64) {
+      const img = new Image();
+      img.src = formData.imageBase64;
+      img.onload = () => setImageLoaded(true);
+      img.onerror = () => console.error("Failed to load profile image");
+    }
+  }, [formData.imageBase64]);
 
   const handleDragStart = (e) => {
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    setDragStart({ x: clientX - position.x, y: clientY - position.y });
   };
 
   const handleDrag = (e) => {
-    if (e.clientX === 0 && e.clientY === 0) return; 
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    if (clientX === 0 && clientY === 0) return;
     setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
+      x: clientX - dragStart.x,
+      y: clientY - dragStart.y,
     });
   };
-  React.useEffect(() => {
+
+  const handleDragEnd = () => {
+    // Optional: Add boundary checks to keep image within card
+    setPosition((prev) => ({
+      x: Math.max(10, Math.min(prev.x, 300)), // Adjust based on card width
+      y: Math.max(-150, Math.min(prev.y, 50)), // Adjust based on card height
+    }));
+  };
+
+  useEffect(() => {
     console.log("formData", formData);
   }, [formData]);
 
   return (
-    <div className="card-outer  mt-3 " >
+    <div className="card-outer mt-3">
       <div className="card-inner p-3" ref={captureRef}>
-        <img src={cardbg} className="card-bg " alt="" />
+        <img src={cardbg} className="card-bg" alt="Card background" />
 
         <div className="id-badge">ID {uniqueID}</div>
 
         <div className="profile-details">
-          <img
-            src={
-              formData.imageBase64 ||
-              "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"
-            }
-            alt="Profile"
-            className="profile-pic"
-            onDragStart={handleDragStart}
-            onDrag={handleDrag}
-            style={{
-              position: "absolute",
-              left: `${position.x}px`,
-              top: `${position.y}px`,
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-              cursor: "move",
-            }}
-          />
+          {imageLoaded && (
+            <img
+              src={
+                formData.imageBase64 ||
+                "https://www.mauicardiovascularsymposium.com/wp-content/uploads/2019/08/dummy-profile-pic-300x300.png"
+              }
+              alt="Profile"
+              className="profile-pic"
+              onDragStart={handleDragStart}
+              onDrag={handleDrag}
+              onDragEnd={handleDragEnd}
+              onTouchStart={handleDragStart}
+              onTouchMove={handleDrag}
+              onTouchEnd={handleDragEnd}
+              style={{
+                position: "absolute",
+                left: `${position.x}px`,
+                top: `${position.y}px`,
+                cursor: "move",
+                touchAction: "none", // Prevent default touch scrolling
+              }}
+            />
+          )}
           <div className="details-text">
             <p className="name">{formData.name || "YOUR NAME"}</p>
             <p className="info">Panchayat: {formData.panchayat || "Panchayat name"}</p>
@@ -65,8 +93,7 @@ function DynamicCardGenerator({ qrUrl, captureRef, formData, uniqueID }) {
           )}
         </div>
       </div>
-        <Button className="preview-btn btn-success">Live Preview</Button>
-
+      <Button className="preview-btn btn-success">Live Preview</Button>
       <div className="drag-hint">Drag and adjust image position inside box</div>
     </div>
   );
