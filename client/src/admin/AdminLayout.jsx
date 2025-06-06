@@ -7,6 +7,7 @@ import Sidebar from "../components/admin/Sidebar";
 import { Offcanvas } from "react-bootstrap";
 import { useAuth } from "../reactContext/AuthContext";
 
+
 function AdminLayout() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function AdminLayout() {
   }, [user]);
 
   return (
+
     <div className="d-flex flex-row mb-0 me-0">
       <Offcanvas style={{width:"fit-content"}} show={show} onHide={handleClose} placement="start" responsive="lg">
         <Sidebar handleClose={handleClose} />
