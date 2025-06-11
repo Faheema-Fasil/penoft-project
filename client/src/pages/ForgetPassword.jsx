@@ -47,7 +47,7 @@ function ForgetPassword() {
         <div
           className="w-100 p-4 p-lg-5 w-auto"
           style={{
-            maxWidth: "400px", // Decreased max-width
+            maxWidth: "400px", 
             margin:"40px",
             marginTop:"80px",
             border: "1.5px solid #a3e6cb",
