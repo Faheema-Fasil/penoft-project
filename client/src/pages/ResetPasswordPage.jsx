@@ -7,8 +7,8 @@ import { confirmPasswordReset } from '../Api/service';
 
 function ResetPasswordPage() {
     const navigate = useNavigate();
-    const location = useLocation(); // To potentially get email from query params or state
-    const [email, setEmail] = useState(location.state?.email || ''); // Pre-fill if email was passed from previous page
+    const location = useLocation(); 
+    const [email, setEmail] = useState(location.state?.email || ''); 
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,7 +28,7 @@ function ResetPasswordPage() {
 
             const response = await confirmPasswordReset({ email, otp, newPassword });
             toast.success(response.data.message || "Password has been reset successfully!");
-            navigate('/'); // Redirect to login page after successful reset
+            navigate('/'); 
         } catch (error) {
             console.error("Password reset failed:", error);
             toast.error(error.response?.data?.message || "Failed to reset password. Please check your OTP and try again.");
@@ -63,7 +63,7 @@ function ResetPasswordPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            disabled={location.state?.email} // Disable if email was pre-filled
+                            disabled={location.state?.email} 
                         />
                     </div>
 
