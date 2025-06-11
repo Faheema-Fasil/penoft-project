@@ -74,7 +74,7 @@ function MyProfilePage() {
         panchayath: formData.panchayath,
         district: formData.district,
       };
-      const text = JSON.stringify(qrData); // Only include safe fields
+      const text = JSON.stringify(qrData); 
       const url = await QrCode.toDataURL(text, { errorCorrectionLevel: "H" });
       setQrUrl(url);
       const canvas = await new Promise((resolve)=>{
